@@ -17,10 +17,7 @@ import org.codehaus.groovy.runtime.typehandling.GroovyCastException
 
 import spock.lang.Specification
 
-import java.nio.file.Files
-import java.nio.file.Paths
-
-class HerokuDeployTaskSpec extends Specification {
+class HerokuPluginTest extends Specification {
 
     @Rule
     TemporaryFolder temporaryFolder = new TemporaryFolder()
@@ -68,16 +65,35 @@ class HerokuDeployTaskSpec extends Specification {
 
     def 'fail when missing app name'() {
         given:
-            buildFile << '''
-                plugins {
-                    id 'com.heroku.sdk.heroku-gradle'
-                }
-            '''.stripIndent()
+        buildFile << '''
+            plugins {
+                id 'com.heroku.sdk.heroku-gradle'
+            }
+        '''.stripIndent()
 
         when:
-            BuildResult buildResult = with('deployHeroku').buildAndFail()
+        BuildResult buildResult = with('deployHeroku').buildAndFail()
 
         then:
-            buildResult.output.contains("app name is required")
+        buildResult.output.contains("appName is required")
+    }
+
+    def 'success on happy path'() {
+        given:
+        buildFile << '''
+            plugins {
+                id 'com.heroku.sdk.heroku-gradle'
+            }
+
+            heroku {
+                appName 'foobar'
+            }
+        '''.stripIndent()
+
+        when:
+        BuildResult buildResult = with('deployHeroku').build()
+
+        then:
+        buildResult.task(':deployHeroku').outcome == TaskOutcome.UP_TO_DATE
     }
 }

@@ -8,21 +8,21 @@ import com.google.common.base.Strings
 class HerokuPluginExtension {
     Project project
 
-    private String name = null
+    private String appName = null
 
     public HerokuPluginExtension(Project project) {
         this.project = project
     }
 
-    public void setName(String name) {
-        this.name = name
+    public void setAppName(String appName) {
+        this.appName = appName
     }
 
-    public String getName() {
-        return name
+    public String getAppName() {
+        return appName
     }
 
     public void resolvePathsAndValidate() {
-        Preconditions.checkArgument(!Strings.isNullOrEmpty(name), "app name is required.")
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(appName), "appName is required.")
     }
 }
