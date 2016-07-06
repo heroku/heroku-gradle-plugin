@@ -1,24 +1,22 @@
 plugins {
-  id 'com.gradle.plugin-publish' version '0.9.1'
+  id 'com.gradle.plugin-publish' version '0.9.2'
+  id 'com.jfrog.bintray' version '1.5'
+
+  id 'eclipse'
+  id 'groovy'
+  id 'idea'
+  id 'maven-publish'
 }
 
-apply plugin: 'com.gradle.plugin-publish'
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'codenarc'
+task createClasspathManifest {
+  def outputDir = file("$buildDir/$name")
 
-allprojects {
-  sourceCompatibility = 1.7
-  targetCompatibility = 1.7
-}
+  inputs.files sourceSets.main.runtimeClasspath
+  outputs.dir outputDir
 
-dependencies {
-  compile gradleApi()
-
-  compile "com.heroku.sdk:heroku-deploy:1.0.3"
-
-  testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
-    exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+  doLast {
+    outputDir.mkdirs()
+    file("$outputDir/plugin-classpath.txt").text = sourceSets.main.runtimeClasspath.join("\n")
   }
 }
 
@@ -26,29 +24,68 @@ repositories {
   jcenter()
 }
 
+dependencies {
+  compile 'com.google.guava:guava:18.0'
+  compile gradleApi()
+
+  testCompile gradleTestKit()
+  testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+    exclude module: 'groovy-all'
+  }
+  testCompile files(createClasspathManifest)
+}
+
 group = 'com.heroku.sdk'
-version = '0.1.0'
+version = "0.1.0"
 
-test {
-  systemProperty 'examples.dir', new File(projectDir, 'examples')
+task sourceJar(type: Jar) {
+  from sourceSets.main.allSource
+  classifier 'sources'
 }
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.14'
-}
-
-pluginBundle {
-  website = 'https://github.com/heroku/heroku-gradle'
-  vcsUrl = 'https://github.com/heroku/heroku-gradle.git'
-  description = 'A Gradle plugin for deploying to Heroku'
-  tags = ['heroku', 'deployment', 'paas']
-
-  plugins {
-    HerokuPlugin {
-      id = 'com.heroku.sdk.heroku-gradle'
-      displayName = 'Heroku Gradle Plugin'
+publishing {
+  publications {
+    bintray(MavenPublication) {
+      from components.java
+      artifact(sourceJar)
+      artifact(publishPluginJavaDocsJar)
     }
   }
 }
 
-publishPlugins.dependsOn check
+bintray {
+  user = System.env.BINTRAY_USER
+  key = System.env.BINTRAY_KEY
+  publish = true
+  pkg {
+    repo = 'releases'
+    name = 'heroku-gradle'
+    userOrg = 'heroku'
+    licenses = ['MIT']
+    publications = ['bintray']
+  }
+}
+
+bintrayUpload.dependsOn 'generatePomFileForBintrayPublication', 'sourceJar', 'build'
+
+bintrayUpload.onlyIf {
+  System.env.BINTRAY_USER && System.env.BINTRAY_KEY && project.version ==~ /\d+\.\d+\.\d+/
+}
+
+pluginBundle {
+  website = 'https://github.com/heroku/heroku-gradle'
+  vcsUrl = 'https://github.com/heroku/heroku-gradle'
+  description = 'A Gradle plugin for deploying to Heroku.'
+  tags = ['heroku', 'deployment']
+
+  plugins {
+    herokuPlugin {
+      id = 'com.heroku.sdk.heroku-gradle'
+      displayName = 'Heroku Gradle'
+    }
+  }
+}
+
+publishPlugins.onlyIf {
+  project.version ==~ /\d+\.\d+\.\d+/
+}
