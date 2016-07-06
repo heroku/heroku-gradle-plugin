@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+  compile 'com.heroku.sdk:heroku-deploy:1.0.3'
   compile 'com.google.guava:guava:18.0'
   compile gradleApi()
 

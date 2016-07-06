@@ -94,6 +94,7 @@ class HerokuPluginTest extends Specification {
         BuildResult buildResult = with('deployHeroku').build()
 
         then:
-        buildResult.task(':deployHeroku').outcome == TaskOutcome.UP_TO_DATE
+        buildResult.task(':deployHeroku').outcome == TaskOutcome.SUCCESS
+        buildResult.output.contains("foobar")
     }
 }

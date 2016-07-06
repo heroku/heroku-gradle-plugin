@@ -6,14 +6,15 @@ import org.gradle.api.Plugin
 class HerokuPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        HerokuPluginExtension ext = project.extensions.create('heroku', HerokuPluginExtension, project)
-
-        project.task('deployHeroku') {
-            println "Deploying to heroku"
-        }
+        HerokuPluginExtension ext = project.extensions.create('heroku', HerokuPluginExtension)
 
         project.afterEvaluate {
             ext.resolvePathsAndValidate()
+        }
+
+        project.task('deployHeroku') << {
+            //GradleApp app = new GradleApp()
+            println "Deploying to heroku: " + project.heroku.appName
         }
 
     }
