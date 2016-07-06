@@ -1,0 +1,54 @@
+plugins {
+  id 'com.gradle.plugin-publish' version '0.9.1'
+}
+
+apply plugin: 'com.gradle.plugin-publish'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'codenarc'
+
+allprojects {
+  sourceCompatibility = 1.7
+  targetCompatibility = 1.7
+}
+
+dependencies {
+  compile gradleApi()
+
+  compile "com.heroku.sdk:heroku-deploy:1.0.3"
+
+  testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+    exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+  }
+}
+
+repositories {
+  jcenter()
+}
+
+group = 'com.heroku.sdk'
+version = '0.1.0'
+
+test {
+  systemProperty 'examples.dir', new File(projectDir, 'examples')
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.14'
+}
+
+pluginBundle {
+  website = 'https://github.com/heroku/heroku-gradle'
+  vcsUrl = 'https://github.com/heroku/heroku-gradle.git'
+  description = 'A Gradle plugin for deploying to Heroku'
+  tags = ['heroku', 'deployment', 'paas']
+
+  plugins {
+    HerokuPlugin {
+      id = 'com.heroku.sdk.heroku-gradle'
+      displayName = 'Heroku Gradle Plugin'
+    }
+  }
+}
+
+publishPlugins.dependsOn check
