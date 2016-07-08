@@ -19,6 +19,8 @@ class HerokuPluginExtension {
 
     String slugFilename = "slug.tgz"
 
+    Boolean includeBuildDir = true
+
     Map<String,String> processTypes = [:]
 
     Map<String,String> configVars = [:]
