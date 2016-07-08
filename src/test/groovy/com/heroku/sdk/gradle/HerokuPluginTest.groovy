@@ -86,7 +86,11 @@ class HerokuPluginTest extends Specification {
             }
 
             heroku {
-                appName 'foobar'
+                appName 'splat'
+                processTypes(
+                    web: "java -jar myapp.jar"
+                )
+                buildpacks = ["heroku/jvm-common"]
             }
         '''.stripIndent()
 

@@ -13,9 +13,19 @@ class HerokuPlugin implements Plugin<Project> {
         }
 
         project.task('deployHeroku') << {
-            //GradleApp app = new GradleApp()
-            println "Deploying to heroku: " + project.heroku.appName
+            GradleApp app = new GradleApp(
+              project.heroku.appName,
+              project.rootDir,
+              project.buildDir,
+              project.heroku.buildpacks,
+              project.logger)
+            app.deploy(
+              ext.getIncludedFiles(project.rootDir),
+              project.heroku.configVars,
+              (String) (project.heroku.jdkUrl == null ? project.heroku.jdkVersion : project.heroku.jdkUrl),
+              project.heroku.stack,
+              project.heroku.processTypes,
+              project.heroku.slugFilename)
         }
-
     }
 }
