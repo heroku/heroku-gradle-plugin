@@ -19,4 +19,4 @@ get_property() {
 export BINTRAY_USER="$(get_property ~/.bintray/.credentials user)"
 export BINTRAY_KEY="$(get_property ~/.bintray/.credentials password)"
 
-./gradlew clean build bintrayUpload -i -x groovydoc
+./gradlew clean build bintrayUpload publishPlugins -i -x groovydoc
