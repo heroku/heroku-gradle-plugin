@@ -4,7 +4,7 @@ jdk:
 - oraclejdk7
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-install: sh etc/travis-setup.sh
+install: "./etc/travis-setup.sh"
 script: "./gradlew check -i -x groovydoc"
 cache:
   directories:
