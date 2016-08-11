@@ -59,8 +59,8 @@ bintray {
   key = System.env.BINTRAY_KEY
   publish = true
   pkg {
-    repo = 'releases'
-    name = 'heroku-gradle'
+    repo = 'maven'
+    name = 'gradle'
     userOrg = 'heroku'
     licenses = ['MIT']
     publications = ['bintray']
