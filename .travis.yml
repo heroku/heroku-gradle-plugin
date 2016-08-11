@@ -7,7 +7,7 @@ jdk:
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 
-script: ./gradlew check -x groovydoc
+script: ./gradlew check -i -x groovydoc
 
 cache:
   directories:
