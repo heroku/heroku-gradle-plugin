@@ -39,6 +39,10 @@ dependencies {
 group = 'com.heroku.sdk'
 version = "0.1.0"
 
+test {
+    testLogging.showStandardStreams = true
+}
+
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource
   classifier 'sources'

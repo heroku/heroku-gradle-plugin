@@ -93,7 +93,29 @@ class HerokuPluginTest extends Specification {
         BuildResult buildResult = with('deployHeroku').buildAndFail()
 
         then:
-        buildResult.output.contains("heroku.appName is required")
+        buildResult.output.contains("Could not find app name")
+    }
+
+    def 'fail when app does not exist'() {
+        given:
+        buildFile << '''
+            plugins {
+                id 'com.heroku.sdk.heroku-gradle'
+            }
+
+            heroku {
+                appName '87y9sadsf8dy7hfff32j'
+                processTypes(
+                    web: "java -jar build/sample-jar.jar"
+                )
+            }
+        '''.stripIndent()
+
+        when:
+        BuildResult buildResult = with('deployHeroku').buildAndFail()
+
+        then:
+        buildResult.output.contains("Could not find app: ")
     }
 
     def 'success on happy path'() {
@@ -152,5 +174,32 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("Done")
 
         exec("curl -L http://${appName}.herokuapp.com").contains("Hello from Java!")
+    }
+
+    def 'success with extra config'() {
+        given:
+        buildFile << """
+            plugins {
+                id 'com.heroku.sdk.heroku-gradle'
+            }
+
+            heroku {
+                appName '${ appName }'
+                includes = ['README.md']
+            }
+        """.stripIndent()
+
+        when:
+        BuildResult buildResult = with('deployHeroku').build()
+
+        then:
+        buildResult.task(':deployHeroku').outcome == TaskOutcome.SUCCESS
+        buildResult.output.contains("app: ${ appName }")
+        buildResult.output.contains("including: build/")
+        buildResult.output.contains("- success")
+        buildResult.output.contains("Installing OpenJDK 1.8")
+        buildResult.output.contains("Done")
+
+        exec("heroku run cat ${exec("pwd").trim()}README.md -a ${appName}").contains("README.md")
     }
 }

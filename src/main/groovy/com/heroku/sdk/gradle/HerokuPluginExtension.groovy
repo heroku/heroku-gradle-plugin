@@ -48,6 +48,6 @@ class HerokuPluginExtension {
     }
 
     public void resolvePathsAndValidate() {
-        Preconditions.checkArgument(!Strings.isNullOrEmpty(appName), "heroku.appName is required.")
+        //Preconditions.checkArgument(!Strings.isNullOrEmpty(appName), "heroku.appName is required.")
     }
 }
