@@ -24,6 +24,46 @@ Build your application, and run the `deployHeroku` task:
 $ ./gradlew build deployHeroku
 ```
 
+## Configuration
+
+You can configure the heroku-gradle plugin by using the `heroku` directive in
+your `build.gradle` configuration.
+
+You can configure your Heroku app name like this:
+
+```
+heroku {
+  appName = "sushi"
+}
+```
+
+You can include extra files like this:
+
+```
+heroku {
+  includes = ["README.md"]
+}
+```
+
+You can exclude all files except your fat-jar like this:
+
+```
+heroku {
+  includes = ["build/libs/my-app.jar"]
+  includeBuildDir = false
+}
+```
+
+You can customize the command used to run your app like this:
+
+```
+heroku {
+  processTypes(
+      web: "java -jar build/libs/my-app.jar"
+  )
+}
+```
+
 ## Development
 
 The heavy lifting for this plugin is done by the heroku-deploy library. The source code for that project can be found in the [heroku-maven-plugin repository](https://github.com/heroku/heroku-maven-plugin/tree/master/heroku-deploy). If you need to update that library, do this:
