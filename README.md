@@ -1,6 +1,6 @@
-# Heroku Gradle Plugin
+# Heroku Gradle Plugin [![Build Status](https://travis-ci.org/heroku/heroku-gradle.svg?branch=master)](https://travis-ci.org/heroku/heroku-gradle)
 
-This plugin is used to deploy Gradle based JVM applications directly to Heroku without pushing to a Git repository. This is can be useful when deploying from a CI server.
+This plugin is used to deploy Gradle based JVM applications directly to Heroku without pushing to a Git repository. This can be useful when deploying from a CI server.
 
 ## Using the Plugin
 
@@ -21,7 +21,7 @@ $ heroku create
 Build your application, and run the `deployHeroku` task:
 
 ```
-$ ./gradlew installDist deployHeroku
+$ ./gradlew build deployHeroku
 ```
 
 ## Development
