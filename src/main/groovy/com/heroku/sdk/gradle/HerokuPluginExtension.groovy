@@ -1,5 +1,7 @@
 package com.heroku.sdk.gradle
 
+import java.util.regex.Pattern
+
 import org.gradle.api.Project
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
@@ -34,7 +36,7 @@ class HerokuPluginExtension {
 
       for (String s : includes) {
         if (s.contains("*")) {
-          String[] dirs = s.split(File.separator);
+          String[] dirs = s.split(Pattern.quote(File.separator));
           String pattern = dirs[dirs.length-1];
           File basedir = new File(gradleDir, s.replace(pattern, ""));
           Collection<File> listFiles = FileUtils.listFiles(basedir, new WildcardFileFilter(pattern), null);
