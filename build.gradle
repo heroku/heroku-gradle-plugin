@@ -37,7 +37,7 @@ dependencies {
 }
 
 group = 'com.heroku.sdk'
-version = "0.2.0"
+version = "0.2.1"
 
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource
