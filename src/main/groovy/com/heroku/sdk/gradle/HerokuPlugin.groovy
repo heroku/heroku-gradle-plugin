@@ -15,7 +15,7 @@ class HerokuPlugin implements Plugin<Project> {
             ext.resolvePathsAndValidate()
         }
 
-        project.task('deployHeroku') << {
+        project.task('deployHeroku').doLast {
             List<File> files = ext.getIncludedFiles(project.rootDir)
             if (project.heroku.includeBuildDir) files << project.buildDir
 
