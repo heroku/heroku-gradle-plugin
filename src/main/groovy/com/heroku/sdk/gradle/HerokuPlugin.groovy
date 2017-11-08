@@ -24,11 +24,11 @@ class HerokuPlugin implements Plugin<Project> {
                     project.logger)
 
             app.deploy(
-                files,
-                project.heroku.configVars,
-                project.heroku.jdkVersion,
-                project.heroku.processTypes,
-                project.heroku.slugFilename)
+                (List<File>) files,
+                (Map<String,String>) project.heroku.configVars,
+                (String) project.heroku.jdkVersion,
+                (Map<String,String>) project.heroku.processTypes,
+                (String) project.heroku.slugFilename)
         }
     }
 }

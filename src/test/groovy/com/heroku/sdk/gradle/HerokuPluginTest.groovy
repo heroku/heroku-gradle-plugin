@@ -161,6 +161,7 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
         buildResult.output.contains("Installing OpenJDK 1.8")
+        !buildResult.output.contains("No processTypes specified!")
         buildResult.output.contains("Done")
 
         exec("curl -L http://${appName}.herokuapp.com").contains("Hello from Java!")

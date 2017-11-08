@@ -38,7 +38,7 @@ class HerokuPluginExtension {
         }
       }
 
-      return files;
+      return files
     }
 
     void resolvePathsAndValidate() {
