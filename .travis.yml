@@ -1,8 +1,9 @@
 sudo: required
 language: groovy
 jdk:
+- oraclejdk9
 - oraclejdk8
-- oraclejdk7
+- openjdk7
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 install: "./etc/travis-setup.sh"
