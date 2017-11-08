@@ -1,21 +1,11 @@
 package com.heroku.sdk.gradle
 
-import org.gradle.api.Project
-import org.gradle.api.Task
-import org.gradle.testfixtures.ProjectBuilder
+import org.apache.commons.io.FileUtils
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
-import org.apache.commons.io.FileUtils
-
-import org.gradle.api.internal.artifacts.mvnsettings.DefaultLocalMavenRepositoryLocator
-import org.gradle.api.internal.artifacts.mvnsettings.DefaultMavenFileLocations
-import org.gradle.api.internal.artifacts.mvnsettings.DefaultMavenSettingsProvider
-import org.gradle.testkit.runner.BuildResult
-import org.gradle.testkit.runner.TaskOutcome
-import org.gradle.testkit.runner.GradleRunner
-
-import org.codehaus.groovy.runtime.typehandling.GroovyCastException
-
 import spock.lang.Specification
 
 class HerokuPluginTest extends Specification {
@@ -93,7 +83,7 @@ class HerokuPluginTest extends Specification {
         BuildResult buildResult = with('deployHeroku').buildAndFail()
 
         then:
-        buildResult.output.contains("Could not find app name")
+        buildResult.output.contains("Could not find app name: Git repo not found.")
     }
 
     def 'fail when app does not exist'() {
@@ -115,7 +105,7 @@ class HerokuPluginTest extends Specification {
         BuildResult buildResult = with('deployHeroku').buildAndFail()
 
         then:
-        buildResult.output.contains("Could not find app: ")
+        buildResult.output.contains("Couldn't find that app.")
     }
 
     def 'success on happy path'() {

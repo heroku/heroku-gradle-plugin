@@ -22,10 +22,11 @@ task createClasspathManifest {
 
 repositories {
   jcenter()
+  mavenCentral()
 }
 
 dependencies {
-  compile 'com.heroku.sdk:heroku-deploy:1.1.1'
+  compile 'com.heroku.sdk:heroku-deploy:2.0.0-RC2'
   compile 'com.google.guava:guava:18.0'
   compile gradleApi()
 
@@ -37,7 +38,7 @@ dependencies {
 }
 
 group = 'com.heroku.sdk'
-version = "0.3.0"
+version = "1.0.0-RC1"
 
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource

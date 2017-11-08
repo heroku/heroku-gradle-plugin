@@ -1,10 +1,7 @@
 package com.heroku.sdk.gradle
 
-import org.gradle.api.Project
 import org.gradle.api.Plugin
-
-import org.apache.http.client.HttpResponseException
-import org.gradle.api.InvalidUserDataException
+import org.gradle.api.Project
 
 class HerokuPlugin implements Plugin<Project> {
     @Override
@@ -20,27 +17,18 @@ class HerokuPlugin implements Plugin<Project> {
             if (project.heroku.includeBuildDir) files << project.buildDir
 
             GradleApp app = new GradleApp(
-              project.heroku.appName,
-              project.rootDir,
-              project.buildDir,
-              project.heroku.buildpacks,
-              project.logger)
+                    (String) project.heroku.appName,
+                    (File) project.rootDir,
+                    (File) project.buildDir,
+                    (List<String>) project.heroku.buildpacks,
+                    project.logger)
 
-            try {
-              app.deploy(
+            app.deploy(
                 files,
                 project.heroku.configVars,
-                (String) (project.heroku.jdkUrl == null ? project.heroku.jdkVersion : project.heroku.jdkUrl),
-                project.heroku.stack,
+                project.heroku.jdkVersion,
                 project.heroku.processTypes,
                 project.heroku.slugFilename)
-            } catch (HttpResponseException e) {
-              if (e.getStatusCode() == 404) {
-                throw new InvalidUserDataException("Could not find app: " + project.heroku.appName, e)
-              } else {
-                throw e;
-              }
-            }
         }
     }
 }
