@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 
 class HerokuPluginExtension {
 
-    String appName
+    String appName = System.getProperty("heroku.appName", null)
 
     String jdkVersion
 
