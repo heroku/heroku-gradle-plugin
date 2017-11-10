@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.heroku.sdk:heroku-deploy:2.0.0-RC3'
+  compile 'com.heroku.sdk:heroku-deploy:2.0.0'
   compile 'com.google.guava:guava:18.0'
   compile gradleApi()
 
@@ -38,7 +38,7 @@ dependencies {
 }
 
 group = 'com.heroku.sdk'
-version = "1.0.0-RC1"
+version = "1.0.0"
 
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource
