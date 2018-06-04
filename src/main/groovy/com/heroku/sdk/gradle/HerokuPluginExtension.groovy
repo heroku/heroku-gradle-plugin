@@ -23,6 +23,9 @@ class HerokuPluginExtension {
 
     List<String> buildpacks = []
 
+    // All files will have this path stripped from their path in the slug
+    File includeRootDir
+
     List<File> getIncludedFiles(File gradleDir) {
       List<File> files = new ArrayList<File>(includes.size())
 

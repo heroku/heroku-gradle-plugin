@@ -54,6 +54,15 @@ heroku {
 }
 ```
 
+You can strip the path from the file paths
+(e.g. turning "foo/bar/build/foobar.tgz" into "foobar.tgz" ).
+This will default to project.rootDir (i.e. the root of all modules)
+```
+heroku {
+  includeRootDir = project.buildDir
+}
+```
+
 You can customize the command used to run your app like this:
 
 ```
