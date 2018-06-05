@@ -13,12 +13,13 @@ class HerokuPlugin implements Plugin<Project> {
         }
 
         project.task('deployHeroku').doLast {
-            List<File> files = ext.getIncludedFiles(project.rootDir)
+            File includeRootDir = project.heroku.includeRootDir ?: project.rootDir
+            List<File> files = ext.getIncludedFiles(includeRootDir)
             if (project.heroku.includeBuildDir) files << project.buildDir
 
             GradleApp app = new GradleApp(
                     (String) project.heroku.appName,
-                    (File) project.rootDir,
+                    includeRootDir,
                     (File) project.buildDir,
                     (List<String>) project.heroku.buildpacks,
                     project.logger)
