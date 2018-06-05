@@ -131,7 +131,7 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("app: ${ appName }")
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
-        buildResult.output.contains("Installing OpenJDK 1.8")
+        buildResult.output.contains("Installing JDK 1.8")
         buildResult.output.contains("Done")
 
         exec("curl -L http://${appName}.herokuapp.com").contains("Hello from Java!")
@@ -160,7 +160,7 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("app: ${ appName }")
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
-        buildResult.output.contains("Installing OpenJDK 1.8")
+        buildResult.output.contains("Installing JDK 1.8")
         !buildResult.output.contains("No processTypes specified!")
         buildResult.output.contains("Done")
 
@@ -188,7 +188,7 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("app: ${ appName }")
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
-        buildResult.output.contains("Installing OpenJDK 1.8")
+        buildResult.output.contains("Installing JDK 1.8")
         buildResult.output.contains("Done")
 
         exec("heroku run cat ${exec("pwd").trim()}README.md -a ${appName}").contains("README.md")
