@@ -1,5 +1,5 @@
 plugins {
-  id 'com.gradle.plugin-publish' version '0.9.9'
+  id 'com.gradle.plugin-publish' version '0.9.10'
   id 'com.jfrog.bintray' version '1.5'
 
   id 'eclipse'
@@ -38,7 +38,7 @@ dependencies {
 }
 
 group = 'com.heroku.sdk'
-version = "1.0.2"
+version = "1.0.3"
 
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource
