@@ -3,6 +3,11 @@
 set -o pipefail
 set -eu
 
+if cat build.gradle | grep -q '^version = .*-SNAPSHOT'; then
+  echo "ERROR ! Must set version to non-snapshot first."
+  exit 1
+fi
+
 get_property() {
   local propFile=$1
   local propName=$2
