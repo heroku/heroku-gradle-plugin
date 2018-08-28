@@ -1,6 +1,6 @@
 plugins {
-  id 'com.gradle.plugin-publish' version '0.9.10'
-  id 'com.jfrog.bintray' version '1.5'
+  id 'com.gradle.plugin-publish' version '0.10.0'
+  id 'com.jfrog.bintray' version '1.8.4'
 
   id 'eclipse'
   id 'groovy'
