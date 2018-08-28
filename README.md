@@ -8,7 +8,7 @@ Add the plugin to your `build.gradle`:
 
 ```
 plugins {
-  id "com.heroku.sdk.heroku-gradle" version "1.0.1"
+  id "com.heroku.sdk.heroku-gradle" version "1.0.4"
 }
 ```
 
