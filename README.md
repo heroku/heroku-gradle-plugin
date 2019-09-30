@@ -63,7 +63,15 @@ heroku {
 }
 ```
 
-You can customize the command used to run your app like this:
+You can explicitly define the required jdk version (in system.properties)
+
+```
+heroku {
+	jdkVersion        = 12
+}
+```
+
+You can customize the command used to run your app (in Procfile) like this:
 
 ```
 heroku {
