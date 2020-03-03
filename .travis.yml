@@ -1,14 +1,14 @@
 sudo: required
 language: groovy
 jdk:
-- oraclejdk9
-- oraclejdk8
+  - openjdk8
+  - openjdk11
 before_cache:
-- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 install: "./etc/travis-setup.sh"
 script: "./gradlew check -i -x groovydoc"
 after_script: heroku keys:remove $USER@`hostname`
 cache:
   directories:
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
