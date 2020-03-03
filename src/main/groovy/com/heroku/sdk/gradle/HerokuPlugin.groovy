@@ -12,24 +12,6 @@ class HerokuPlugin implements Plugin<Project> {
             ext.resolvePathsAndValidate()
         }
 
-        project.task('deployHeroku').doLast {
-            File includeRootDir = project.heroku.includeRootDir ?: project.rootDir
-            List<File> files = ext.getIncludedFiles(includeRootDir)
-            if (project.heroku.includeBuildDir) files << project.buildDir
-
-            GradleApp app = new GradleApp(
-                    (String) project.heroku.appName,
-                    includeRootDir,
-                    (File) project.buildDir,
-                    (List<String>) project.heroku.buildpacks,
-                    project.logger)
-
-            app.deploy(
-                (List<File>) files,
-                (Map<String,String>) project.heroku.configVars,
-                (String) project.heroku.jdkVersion,
-                (Map<String,String>) project.heroku.processTypes,
-                (String) project.heroku.slugFilename)
-        }
+        project.tasks.create('deployHeroku', DeployHerokuTask.class, ext)
     }
 }
