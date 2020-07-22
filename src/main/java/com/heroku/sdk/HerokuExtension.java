@@ -1,9 +1,6 @@
 package com.heroku.sdk;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HerokuExtension {
     private boolean includeBuildDir = true;
@@ -12,7 +9,7 @@ public class HerokuExtension {
     private String jdkVersion;
     private Map<String, String> processTypes = new HashMap<>();
     private Map<String, String> configVars = new HashMap<>();
-    private List<String> buildpacks = new ArrayList<>();
+    private List<String> buildpacks = Collections.singletonList("heroku/jvm");
 
     public boolean isIncludeBuildDir() {
         return includeBuildDir;
@@ -23,7 +20,7 @@ public class HerokuExtension {
     }
 
     public List<String> getIncludes() {
-        return includes;
+        return Collections.unmodifiableList(includes);
     }
 
     public void setIncludes(List<String> includes) {
@@ -47,7 +44,7 @@ public class HerokuExtension {
     }
 
     public Map<String, String> getProcessTypes() {
-        return processTypes;
+        return Collections.unmodifiableMap(processTypes);
     }
 
     public void setProcessTypes(Map<String, String> processTypes) {
@@ -55,7 +52,7 @@ public class HerokuExtension {
     }
 
     public Map<String, String> getConfigVars() {
-        return configVars;
+        return Collections.unmodifiableMap(configVars);
     }
 
     public void setConfigVars(Map<String, String> configVars) {
@@ -63,7 +60,7 @@ public class HerokuExtension {
     }
 
     public List<String> getBuildpacks() {
-        return buildpacks;
+        return Collections.unmodifiableList(buildpacks);
     }
 
     public void setBuildpacks(List<String> buildpacks) {

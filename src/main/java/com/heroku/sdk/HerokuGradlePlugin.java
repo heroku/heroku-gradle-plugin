@@ -70,11 +70,6 @@ public class HerokuGradlePlugin implements Plugin<Project> {
 
                     Path sourceBlobPath = SourceBlobPackager.pack(sourceBlobDescriptor, outputAdapter);
 
-                    List<String> buildpacks = new ArrayList<>();
-                    buildpacks.add("heroku/jvm");
-
-                    Map<String, String> configVars = herokuExtension.getConfigVars();
-
                     String appName = AppNameResolver
                             .resolve(projectRootDirPath, customAppNameResolver)
                             .orElseThrow(() -> new IllegalArgumentException("Could not resolve app name!"));
@@ -86,7 +81,7 @@ public class HerokuGradlePlugin implements Plugin<Project> {
                     String deployedVersionString = project.getVersion().toString();
 
                     DeploymentDescriptor deploymentDescriptor
-                            = new DeploymentDescriptor(appName, buildpacks, configVars, sourceBlobPath, deployedVersionString);
+                            = new DeploymentDescriptor(appName, herokuExtension.getBuildpacks(), herokuExtension.getConfigVars(), sourceBlobPath, deployedVersionString);
 
                     boolean deployResult = Deployer.deploy(apiKey, "heroku-gradle", "2", deploymentDescriptor, outputAdapter);
 
