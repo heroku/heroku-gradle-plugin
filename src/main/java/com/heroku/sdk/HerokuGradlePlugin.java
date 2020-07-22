@@ -48,7 +48,7 @@ public class HerokuGradlePlugin implements Plugin<Project> {
                 Path projectRootDirPath = project.getRootDir().toPath();
 
                 try {
-                    OutputAdapter outputAdapter = new GradleOutputAdapter();
+                    OutputAdapter outputAdapter = new GradleOutputAdapter(project.getLogger());
 
                     Supplier<Optional<String>> customJdkResolver =
                             () -> Optional.ofNullable(herokuExtension.getJdkVersion());
