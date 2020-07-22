@@ -86,7 +86,9 @@ public class HerokuGradlePlugin implements Plugin<Project> {
                     boolean deployResult = Deployer.deploy(apiKey, "heroku-gradle", "2", deploymentDescriptor, outputAdapter);
 
                     if (!deployResult) {
-                        throw new TaskExecutionException(task, new RuntimeException("FIXME! TODO!"));
+                        // heroku-deploy reports errors directly to the user using the OutputAdapter. We have to throw
+                        // this exception here to mark this task as failed.
+                        throw new TaskExecutionException(task, new RuntimeException("Deployment failed."));
                     }
                 } catch (IOException | InterruptedException e) {
                     throw new TaskExecutionException(task, e);
