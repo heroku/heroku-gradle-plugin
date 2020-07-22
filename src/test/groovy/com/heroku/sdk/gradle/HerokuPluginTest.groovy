@@ -190,6 +190,6 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("Installing JDK 1.8")
         buildResult.output.contains("Done")
 
-        exec("heroku run cat ${exec("pwd").trim()}README.md -a ${appName}").contains("README.md")
+        exec("heroku run ls -a ${appName}").contains("README.md")
     }
 }
