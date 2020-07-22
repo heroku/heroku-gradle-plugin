@@ -1,6 +1,7 @@
 plugins {
     id 'groovy'
     id 'java-gradle-plugin'
+    id "com.gradle.plugin-publish" version "0.12.0"
 }
 
 version '2.0.0-SNAPSHOT'
@@ -25,9 +26,19 @@ gradlePlugin {
         herokuGradle {
             id = 'com.heroku.sdk.heroku-gradle'
             implementationClass = 'com.heroku.sdk.HerokuGradlePlugin'
-            displayName = 'Heroku Gradle'
-            description = 'A Gradle plugin for deploying to Heroku.'
         }
     }
 }
 
+pluginBundle {
+    website = 'https://github.com/heroku/heroku-gradle'
+    vcsUrl = 'https://github.com/heroku/heroku-gradle.git'
+    description = 'A Gradle plugin for deploying to Heroku.'
+    tags = ['heroku', 'deployment']
+
+    plugins {
+        herokuGradle {
+            displayName = 'Heroku Gradle'
+        }
+    }
+}
