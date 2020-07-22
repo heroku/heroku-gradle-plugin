@@ -125,6 +125,10 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("Installing JDK 1.8")
         buildResult.output.contains("Done")
 
+        // Deployment is not immediate, it takes a short amount of time to take effect.
+        // To alleviate the chance of flappy tests, we generously sleep here.
+        sleep(5000)
+
         exec("curl -L http://${appName}.herokuapp.com").contains("Hello from Java!")
     }
 
@@ -154,6 +158,10 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains("Installing JDK 1.8")
         !buildResult.output.contains("No processTypes specified!")
         buildResult.output.contains("Done")
+
+        // Deployment is not immediate, it takes a short amount of time to take effect.
+        // To alleviate the chance of flappy tests, we generously sleep here.
+        sleep(5000)
 
         exec("curl -L http://${appName}.herokuapp.com").contains("Hello from Java!")
     }
