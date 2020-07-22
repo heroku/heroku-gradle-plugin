@@ -8,11 +8,11 @@ Add the plugin to your `build.gradle`:
 
 ```
 plugins {
-  id "com.heroku.sdk.heroku-gradle" version "1.0.4"
+  id "com.heroku.sdk.heroku-gradle" version "2.0.0"
 }
 ```
 
-Create a Heroku app using the [Heroku CLI](https://toolbelt.heroku.com):
+Create a Heroku app using the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli):
 
 ```
 $ heroku create
@@ -67,7 +67,7 @@ You can explicitly define the required jdk version (in system.properties)
 
 ```
 heroku {
-	jdkVersion        = 12
+  jdkVersion = 11
 }
 ```
 

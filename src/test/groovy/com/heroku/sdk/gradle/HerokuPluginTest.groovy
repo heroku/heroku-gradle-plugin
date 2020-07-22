@@ -16,11 +16,10 @@ class HerokuPluginTest extends Specification {
     File projectDir
     File buildFile
     String appName
-    List<File> pluginClasspath
 
     GradleRunner with(String... tasks) {
         GradleRunner.create()
-                .withPluginClasspath(pluginClasspath)
+                .withPluginClasspath()
                 .withProjectDir(projectDir)
                 .withArguments(tasks)
     }
@@ -44,31 +43,23 @@ class HerokuPluginTest extends Specification {
     def setup() {
         projectDir = temporaryFolder.root
         buildFile = temporaryFolder.newFile('build.gradle')
+        temporaryFolder.newFile("README.md")
         File buildDir = temporaryFolder.newFolder('build')
 
         FileUtils.copyFile(
-          new File("src/test/resources/sample-jar.jar"),
-          new File(buildDir, "sample-jar.jar"))
+                new File("src/test/resources/sample-jar.jar"),
+                new File(buildDir, "sample-jar.jar"))
 
         appName = "gradle-test-" + UUID.randomUUID().toString().substring(0,12);
         if (execCond("heroku create -n ${appName}")) {
-          println("Created ${appName}")
+            println("Created ${appName}")
         } else {
-          throw RuntimeException("Failed to create app: ${appName}");
+            throw RuntimeException("Failed to create app: ${appName}");
         }
-
-        def pluginClasspathResource = getClass().classLoader.findResource("plugin-classpath.txt")
-        if (pluginClasspathResource == null) {
-            throw new IllegalStateException("Did not find plugin classpath resource, run `testClasses` build task.")
-        }
-
-        pluginClasspath = pluginClasspathResource.readLines()
-                .collect { it.replace('\\', '\\\\') } // escape backslashes in Windows paths
-                .collect { new File(it) }
     }
 
     def cleanup() {
-      println(exec("heroku destroy ${appName} --confirm ${appName}"))
+        println(exec("heroku destroy ${appName} --confirm ${appName}"))
     }
 
     def 'fail when missing app name'() {
@@ -83,7 +74,7 @@ class HerokuPluginTest extends Specification {
         BuildResult buildResult = with('deployHeroku').buildAndFail()
 
         then:
-        buildResult.output.contains("Could not find app name: Git repo not found.")
+        buildResult.output.contains("Could not resolve app name!")
     }
 
     def 'fail when app does not exist'() {
@@ -105,7 +96,7 @@ class HerokuPluginTest extends Specification {
         BuildResult buildResult = with('deployHeroku').buildAndFail()
 
         then:
-        buildResult.output.contains("Couldn't find that app.")
+        buildResult.output.contains("Could not find application! Make sure you configured your application name correctly.")
     }
 
     def 'success on happy path'() {
@@ -128,7 +119,7 @@ class HerokuPluginTest extends Specification {
 
         then:
         buildResult.task(':deployHeroku').outcome == TaskOutcome.SUCCESS
-        buildResult.output.contains("app: ${ appName }")
+        buildResult.output.contains(appName)
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
         buildResult.output.contains("Installing JDK 1.8")
@@ -157,7 +148,7 @@ class HerokuPluginTest extends Specification {
 
         then:
         buildResult.task(':deployHeroku').outcome == TaskOutcome.SUCCESS
-        buildResult.output.contains("app: ${ appName }")
+        buildResult.output.contains(appName)
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
         buildResult.output.contains("Installing JDK 1.8")
@@ -185,7 +176,7 @@ class HerokuPluginTest extends Specification {
 
         then:
         buildResult.task(':deployHeroku').outcome == TaskOutcome.SUCCESS
-        buildResult.output.contains("app: ${ appName }")
+        buildResult.output.contains(appName)
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
         buildResult.output.contains("Installing JDK 1.8")
