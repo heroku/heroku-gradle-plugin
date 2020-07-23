@@ -14,10 +14,12 @@ import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskExecutionException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -81,7 +83,7 @@ public class HerokuGradlePlugin implements Plugin<Project> {
                     DeploymentDescriptor deploymentDescriptor
                             = new DeploymentDescriptor(appName, herokuExtension.getBuildpacks(), herokuExtension.getConfigVars(), sourceBlobPath, deployedVersionString);
 
-                    boolean deployResult = Deployer.deploy(apiKey, "heroku-gradle", "2", deploymentDescriptor, outputAdapter);
+                    boolean deployResult = Deployer.deploy(apiKey, "heroku-gradle", getPluginVersion(), deploymentDescriptor, outputAdapter);
 
                     if (!deployResult) {
                         // heroku-deploy reports errors directly to the user using the OutputAdapter. We have to throw
@@ -93,5 +95,18 @@ public class HerokuGradlePlugin implements Plugin<Project> {
                 }
             });
         });
+    }
+
+    private static String getPluginVersion() throws IOException {
+        String filename = "heroku-gradle.properties";
+        InputStream propertiesInputStream = HerokuGradlePlugin.class.getClassLoader().getResourceAsStream(filename);
+
+        if (propertiesInputStream != null) {
+            Properties properties = new Properties();
+            properties.load(propertiesInputStream);
+            return properties.getProperty("version");
+        }
+
+        return "unknown";
     }
 }
