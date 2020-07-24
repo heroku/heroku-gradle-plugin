@@ -1,4 +1,4 @@
-# Heroku Gradle Plugin [![Build Status](https://travis-ci.org/heroku/heroku-gradle.svg?branch=master)](https://travis-ci.org/heroku/heroku-gradle) [ ![Download](https://api.bintray.com/packages/heroku/maven/gradle/images/download.svg) ](https://bintray.com/heroku/maven/gradle/_latestVersion)
+# Heroku Gradle Plugin [![Build Status](https://travis-ci.com/heroku/heroku-gradle.svg?branch=master)](https://travis-ci.com/heroku/heroku-gradle)
 
 This plugin is used to deploy Gradle based JVM applications directly to Heroku without pushing to a Git repository. This can be useful when deploying from a CI server.
 
@@ -8,11 +8,11 @@ Add the plugin to your `build.gradle`:
 
 ```
 plugins {
-  id "com.heroku.sdk.heroku-gradle" version "1.0.4"
+  id "com.heroku.sdk.heroku-gradle" version "2.0.0"
 }
 ```
 
-Create a Heroku app using the [Heroku CLI](https://toolbelt.heroku.com):
+Create a Heroku app using the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli):
 
 ```
 $ heroku create
@@ -67,7 +67,7 @@ You can explicitly define the required jdk version (in system.properties)
 
 ```
 heroku {
-	jdkVersion        = 12
+  jdkVersion = 11
 }
 ```
 
