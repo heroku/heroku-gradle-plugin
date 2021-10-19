@@ -83,6 +83,15 @@ heroku {
 }
 ```
 
+### Authentication
+
+To issue deployment to [Heroku platform](https://id.heroku.com/login) pluging needs to authenticate
+with the following options:
+
+* Setup of an environment variable `HEROKU_API_KEY` containing the appropriate API key of your Heroku project.
+* TODO
+
+
 ## Development
 
 The heavy lifting for this plugin is done by the heroku-deploy library. The source code for that project can be found in the [heroku-maven-plugin repository](https://github.com/heroku/heroku-maven-plugin/tree/main/heroku-deploy). If you need to update that library, do this:
