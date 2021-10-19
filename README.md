@@ -56,15 +56,6 @@ heroku {
 }
 ```
 
-You can strip the path from the file paths
-(e.g. turning "foo/bar/build/foobar.tgz" into "foobar.tgz" ).
-This will default to project.rootDir (i.e. the root of all modules)
-```
-heroku {
-  includeRootDir = project.buildDir
-}
-```
-
 You can explicitly define the required jdk version (in system.properties)
 
 ```
