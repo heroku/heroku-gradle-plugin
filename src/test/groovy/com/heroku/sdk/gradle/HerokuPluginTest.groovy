@@ -122,7 +122,7 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains(appName)
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
-        buildResult.output.contains("Installing JDK 1.8")
+        buildResult.output.contains("Installing OpenJDK 1.8")
         buildResult.output.contains("Done")
 
         // Deployment is not immediate, it takes a short amount of time to take effect.
@@ -155,7 +155,7 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains(appName)
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
-        buildResult.output.contains("Installing JDK 1.8")
+        buildResult.output.contains("Installing OpenJDK 1.8")
         !buildResult.output.contains("No processTypes specified!")
         buildResult.output.contains("Done")
 
@@ -187,7 +187,7 @@ class HerokuPluginTest extends Specification {
         buildResult.output.contains(appName)
         buildResult.output.contains("including: build/")
         buildResult.output.contains("- success")
-        buildResult.output.contains("Installing JDK 1.8")
+        buildResult.output.contains("Installing OpenJDK 1.8")
         buildResult.output.contains("Done")
 
         exec("heroku run ls -a ${appName}").contains("README.md")
