@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.heroku.sdk:heroku-deploy:3.0.4'
+    implementation 'com.heroku.sdk:heroku-deploy:3.0.6'
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
 }
 
