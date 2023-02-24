@@ -10,7 +10,7 @@ Add the plugin to your `build.gradle`:
 
 ```
 plugins {
-  id "com.heroku.sdk.heroku-gradle" version "2.0.0"
+  id "com.heroku.sdk.heroku-gradle" version "3.0.0"
 }
 ```
 
@@ -69,7 +69,7 @@ You can explicitly define the required jdk version (in system.properties)
 
 ```
 heroku {
-  jdkVersion = 11
+  jdkVersion = 17
 }
 ```
 

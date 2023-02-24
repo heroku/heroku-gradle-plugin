@@ -12,7 +12,6 @@ import com.heroku.sdk.deploy.util.Procfile;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskExecutionException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -23,13 +22,14 @@ import java.util.Properties;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 public class HerokuGradlePlugin implements Plugin<Project> {
 
     public void apply(Project project) {
         project.getExtensions().add("heroku", HerokuExtension.class);
 
         project.getTasks().register("deployHeroku", task -> {
-            task.setDescription("Deploys JVM web-application directly to Heroku without pushing to a Git repository.");
+            task.setDescription("Deploys a JVM application directly to Heroku without pushing to a Git repository.");
             task.setGroup("Heroku");
 
             HerokuExtension herokuExtension = project.getExtensions().getByType(HerokuExtension.class);
@@ -41,7 +41,7 @@ public class HerokuGradlePlugin implements Plugin<Project> {
                     .collect(Collectors.toList());
 
             if (herokuExtension.isIncludeBuildDir()) {
-                includedPaths.add(Paths.get("build/"));
+                includedPaths.add(project.getBuildDir().toPath());
             }
 
             task.doLast(s -> {

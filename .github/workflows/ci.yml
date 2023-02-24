@@ -16,8 +16,7 @@ jobs:
     strategy:
       matrix:
         java-version:
-          - 8
-          - 11
+          - 17
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_API_USER: ${{ secrets.HEROKU_API_USER }}
@@ -29,4 +28,4 @@ jobs:
           java-version: ${{ matrix.java-version }}
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
-      - run: "./gradlew check -i -x groovydoc"
+      - run: "./gradlew check -i"
