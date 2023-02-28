@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  maven:
+  gradle:
     name: "Execute build, run tests (Java ${{ matrix.java-version }})"
     runs-on: ubuntu-22.04
     strategy:
