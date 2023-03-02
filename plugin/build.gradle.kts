@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.heroku.sdk:heroku-deploy:3.0.6")
+    implementation("com.heroku.sdk:heroku-deploy:3.0.7")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation(gradleTestKit())
     testImplementation("org.buildobjects:jproc:2.8.2")
