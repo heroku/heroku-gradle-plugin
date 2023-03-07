@@ -7,8 +7,9 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
 }
 
 repositories {
@@ -41,6 +42,12 @@ gradlePlugin {
 val functionalTestSourceSet = sourceSets.create("functionalTest") {
 }
 
+tasks.named<JavaCompile>(functionalTestSourceSet.getCompileTaskName("java")) {
+    javaCompiler.set(javaToolchains.compilerFor {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    })
+}
+
 configurations["functionalTestImplementation"].extendsFrom(configurations["testImplementation"])
 
 val functionalTest by tasks.registering(Test::class) {
@@ -48,10 +55,9 @@ val functionalTest by tasks.registering(Test::class) {
     classpath = functionalTestSourceSet.runtimeClasspath
     useJUnitPlatform()
 
-    java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    })
 }
 
 gradlePlugin.testSourceSets(functionalTestSourceSet)
