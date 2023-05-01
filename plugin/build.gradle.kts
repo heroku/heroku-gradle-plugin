@@ -3,7 +3,7 @@ project.version = "3.0.0"
 
 plugins {
     `java-gradle-plugin`
-    id("com.gradle.plugin-publish") version "1.1.0"
+    id("com.gradle.plugin-publish") version "1.2.0"
 }
 
 java {
