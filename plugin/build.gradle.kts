@@ -21,7 +21,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
     testImplementation(gradleTestKit())
     testImplementation("org.buildobjects:jproc:2.8.2")
-    testImplementation("com.google.guava:guava:31.1-jre")
+    testImplementation("com.google.guava:guava:32.0.0-jre")
 }
 
 gradlePlugin {
