@@ -4,7 +4,7 @@ import com.heroku.sdk.deploy.lib.OutputAdapter;
 import org.gradle.api.logging.Logger;
 
 public class GradleOutputAdapter implements OutputAdapter {
-    private Logger logger;
+    private final Logger logger;
 
     public GradleOutputAdapter(Logger logger) {
         this.logger = logger;

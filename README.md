@@ -1,6 +1,6 @@
 # Heroku Gradle Plugin
 [![](https://badgen.net/github/license/heroku/heroku-gradle)](LICENSE)
-[![](https://badgen.net/circleci/github/heroku/heroku-gradle/main)](https://circleci.com/gh/heroku/heroku-gradle/tree/main)
+[![CI](https://github.com/heroku/heroku-gradle/actions/workflows/ci.yml/badge.svg)](https://github.com/heroku/heroku-gradle/actions/workflows/ci.yml)
 
 This plugin is used to deploy Gradle based JVM applications directly to Heroku without pushing to a Git repository. This can be useful when deploying from a CI server.
 
@@ -10,7 +10,7 @@ Add the plugin to your `build.gradle`:
 
 ```
 plugins {
-  id "com.heroku.sdk.heroku-gradle" version "2.0.0"
+  id "com.heroku.sdk.heroku-gradle" version "3.0.0"
 }
 ```
 
@@ -60,7 +60,7 @@ You can explicitly define the required jdk version (in system.properties)
 
 ```
 heroku {
-  jdkVersion = 11
+  jdkVersion = 17
 }
 ```
 
