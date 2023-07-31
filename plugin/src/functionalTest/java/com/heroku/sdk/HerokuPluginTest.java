@@ -1,5 +1,6 @@
 package com.heroku.sdk;
 
+import com.google.gson.JsonParser;
 import org.buildobjects.process.ProcBuilder;
 import org.buildobjects.process.ProcResult;
 import org.gradle.internal.impldep.com.google.common.io.Files;
@@ -29,6 +30,7 @@ public class HerokuPluginTest {
     private File temporaryDirectory;
     private File buildFile;
     private String herokuAppName;
+    private URI herokuAppUri;
 
     @BeforeEach
     public void setup() throws IOException {
@@ -49,6 +51,19 @@ public class HerokuPluginTest {
                 .withOutputStream(System.out)
                 .withErrorStream(System.err)
                 .run();
+
+        String herokuAppInfoString = new ProcBuilder("heroku")
+                .withArgs("apps:info", "-a", herokuAppName, "--json")
+                .withErrorStream(System.err)
+                .run()
+                .getOutputString();
+
+        herokuAppUri = URI.create(JsonParser
+                .parseString(herokuAppInfoString)
+                .getAsJsonObject()
+                .getAsJsonObject("app")
+                .get("web_url")
+                .getAsString());
     }
 
     @AfterEach
@@ -95,7 +110,7 @@ public class HerokuPluginTest {
         // Give the platform some time to boot the deployed application
         Thread.sleep(5000);
 
-        HttpRequest request = HttpRequest.newBuilder(new URI("https://" + herokuAppName + ".herokuapp.com/")).build();
+        HttpRequest request = HttpRequest.newBuilder(herokuAppUri).build();
         HttpResponse<String> response =
                 HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -138,7 +153,7 @@ public class HerokuPluginTest {
         // Give the platform some time to boot the deployed application
         Thread.sleep(5000);
 
-        HttpRequest request = HttpRequest.newBuilder(new URI("https://" + herokuAppName + ".herokuapp.com/")).build();
+        HttpRequest request = HttpRequest.newBuilder(herokuAppUri).build();
         HttpResponse<String> response =
                 HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
