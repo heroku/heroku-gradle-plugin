@@ -2,6 +2,15 @@
 [![](https://badgen.net/github/license/heroku/heroku-gradle)](LICENSE)
 [![CI](https://github.com/heroku/heroku-gradle/actions/workflows/ci.yml/badge.svg)](https://github.com/heroku/heroku-gradle/actions/workflows/ci.yml)
 
+> [!IMPORTANT]
+> This plugin is no longer maintained.
+>
+> Heroku offers a build tool independent CLI for the purpose of deploying JAR and WAR files directly to Heroku without
+> using the standard Git workflow. Users that require the functionality of the Heroku Gradle Plugin are encouraged to
+> migrate to it.
+>
+> Find out more: [Heroku JVM Application Deployer](https://github.com/heroku/heroku-jvm-application-deployer)
+
 This plugin is used to deploy Gradle based JVM applications directly to Heroku without pushing to a Git repository. This can be useful when deploying from a CI server.
 
 ## Using the Plugin
