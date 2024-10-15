@@ -21,7 +21,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation(gradleTestKit())
     testImplementation("org.buildobjects:jproc:2.8.2")
-    testImplementation("com.google.guava:guava:32.1.3-jre")
+    testImplementation("com.google.guava:guava:33.3.1-jre")
     testImplementation("com.google.code.gson:gson:2.10.1")
 }
 
