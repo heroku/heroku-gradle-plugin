@@ -22,7 +22,7 @@ dependencies {
     testImplementation(gradleTestKit())
     testImplementation("org.buildobjects:jproc:2.8.2")
     testImplementation("com.google.guava:guava:32.1.3-jre")
-    testImplementation("com.google.code.gson:gson:2.10.1")
+    testImplementation("com.google.code.gson:gson:2.11.0")
 }
 
 gradlePlugin {
